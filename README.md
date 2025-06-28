@@ -1,63 +1,154 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=19790254&assignment_repo_type=AssignmentRepo)
-# Express.js RESTful API Assignment
+# 📦 Week 2: Express.js RESTful API
 
-This assignment focuses on building a RESTful API using Express.js, implementing proper routing, middleware, and error handling.
+## 🚀 Project Objective
 
-## Assignment Overview
+Build a RESTful API using Express.js that supports standard CRUD operations, middleware (logger, authentication, validation), error handling, and advanced features like filtering, pagination, and search.
 
-You will:
-1. Set up an Express.js server
-2. Create RESTful API routes for a product resource
-3. Implement custom middleware for logging, authentication, and validation
-4. Add comprehensive error handling
-5. Develop advanced features like filtering, pagination, and search
+---
 
-## Getting Started
+## 🛠️ Tech Stack
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Install dependencies:
-   ```
-   npm install
-   ```
-4. Run the server:
-   ```
-   npm start
-   ```
+- Node.js
+- Express.js
+- UUID (for unique IDs)
+- dotenv (for environment variables)
+- body-parser
 
-## Files Included
+## 📁 Project Structure
 
-- `Week2-Assignment.md`: Detailed assignment instructions
-- `server.js`: Starter Express.js server file
-- `.env.example`: Example environment variables file
+```stack
+.
+├── server.js
+├── routes/
+│   └── products.js
+├── middleware/
+│   ├── logger.js
+│   ├── auth.js
+│   ├── validateProduct.js
+│   └── errorHandler.js
+├── utils/
+│   └── errors/
+│       └── NotFoundError.js
+├── .env.example
+├── README.md
+├── package.json
+└── node_modules/
+```
 
-## Requirements
+## 🔧 Setup Instructions
 
-- Node.js (v18 or higher)
-- npm or yarn
-- Postman, Insomnia, or curl for API testing
+### 1. Clone the repository
 
-## API Endpoints
+```bash
+git clone https://github.com/PLP-MERN-Stack-Development/week-2-express-js-assignment-Elyson25.git
+cd week-2-express-js-assignment-Elyson25
+```
 
-The API will have the following endpoints:
+### 2. Install dependencies
 
-- `GET /api/products`: Get all products
-- `GET /api/products/:id`: Get a specific product
-- `POST /api/products`: Create a new product
-- `PUT /api/products/:id`: Update a product
-- `DELETE /api/products/:id`: Delete a product
+```bash
+npm install
+```
 
-## Submission
+### 3. Create a `.env` file
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+Copy from `.env.example` and set your API key:
 
-1. Complete all the required API endpoints
-2. Implement the middleware and error handling
-3. Document your API in the README.md
-4. Include examples of requests and responses
+```env
+PORT=3000
+API_KEY=your_secret_key_here
+```
 
-## Resources
+### 4. Run the server
 
-- [Express.js Documentation](https://expressjs.com/)
-- [RESTful API Design Best Practices](https://restfulapi.net/)
-- [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) 
+```bash
+node server.js
+```
+
+> The server will run at: `http://localhost:3000`
+
+## 🛣️ API Endpoints
+
+| Method | Route                                      | Description                        |
+|--------|--------------------------------------------|------------------------------------|
+| GET    | `/api/products`                            | Get all products                   |
+| GET    | `/api/products/:id`                        | Get product by ID                  |
+| POST   | `/api/products`                            | Create a new product               |
+| PUT    | `/api/products/:id`                        | Update an existing product         |
+| DELETE | `/api/products/:id`                        | Delete a product                   |
+| GET    | `/api/products/stats/categories`           | Get product count by category      |
+
+## 🔍 Query Parameters (GET `/api/products`)
+
+| Parameter | Type     | Description                       |
+|-----------|----------|-----------------------------------|
+| category  | string   | Filter by product category        |
+| name      | string   | Search by product name (keyword)  |
+| page      | integer  | Page number (for pagination)      |
+| limit     | integer  | Number of items per page          |
+
+**Example:**
+
+```markdown
+GET /api/products?category=Books&name=lamp&page=2&limit=5
+```
+
+## 🔐 Required Headers
+
+| Header      | Value             | Required | Description                |
+|-------------|-------------------|----------|----------------------------|
+| x-api-key   | your_secret_key   | ✅       | For authentication         |
+| Content-Type| application/json  | ✅       | For POST/PUT requests      |
+
+## 🧪 Sample Request: POST `/api/products`
+
+**Request Body:**
+
+```json
+{
+  "name": "iPhone 15",
+  "description": "Latest Apple smartphone",
+  "price": 1299.99,
+  "category": "Electronics",
+  "inStock": true
+}
+```
+
+**Sample Response:**
+
+```json
+{
+  "id": "6d9a-1bd2-4134-bd9e",
+  "name": "iPhone 15",
+  "description": "Latest Apple smartphone",
+  "price": 1299.99,
+  "category": "Electronics",
+  "inStock": true
+}
+```
+
+## 🚠 Error Responses
+
+- `400 Bad Request` – Validation error
+- `403 Forbidden` – Missing or invalid API key
+- `404 Not Found` – Product not found
+- `500 Internal Server Error` – Something went wrong on the server
+
+## 🧼 Logging Example
+
+Logger middleware logs every request:
+
+``` markdown
+[2025-06-16T12:00:00Z] POST /api/products
+```
+
+## 👤 Author
+
+Name: Elyson25  
+Info: MERN Stack Student, PLP Kenya
+
+## 📚 Notes
+
+- Data is stored in-memory.
+- Restarting the server will reset the product list.
+- Use tools like Postman or curl for API testing.
